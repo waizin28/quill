@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { trpc } from '../_trpc/client';
 import { Loader2 } from 'lucide-react';
 
-// Purpose to sync user to database
+// Purpose is to sync the user to database
 const Page = () => {
   const router = useRouter();
 
@@ -13,10 +13,11 @@ const Page = () => {
   const origin = searchParams.get('origin');
 
   //   trpc automatically get back object type (instead of any) cast from whatever api return back
+  // calling method to see if user already sync with database
   trpc.authCallback.useQuery(undefined, {
     onSuccess: ({ success }) => {
       if (success) {
-        // user is synced to db
+        // navigate to where they come back from
         router.push(origin ? `/${origin}` : '/dashboard');
       }
     },
